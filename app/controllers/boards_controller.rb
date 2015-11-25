@@ -4,7 +4,6 @@ class BoardsController < ApplicationController
   def index
     # board = @current_user.boards.first
     # render json: board, status: 200
-    redirect :show
   end
 
   def dashboard
@@ -37,7 +36,7 @@ class BoardsController < ApplicationController
     # board.lists.include(:cards).to_json
 
     # refactor this to use ActiveModel::Serializer or jBuilder for easier JSON manipulation
-    render json: { board: board_hash, lists: lists, cards: cards.flatten!, tasks: tasks.flatten! }
+    render json: { board: board_hash, lists: lists, cards: flat_cards, tasks: tasks.flatten! }
   end
 
   def create
