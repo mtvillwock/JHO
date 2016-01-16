@@ -1,5 +1,28 @@
 class ListsController < ApplicationController
 
+  def index
+    lists = @current_user.boards.first.lists.includes(:cards)
+    cards = lists.map { |list| list.cards  }
+    if lists
+      render json: { lists: lists, cards: cards }
+    else
+      render json: { errors: { id: "Couldn't find Lists for user" } }
+    end
+  end
+
+  def show
+    list = List.find_by(params[:id])
+    cards = list.cards
+    if list
+      render json: { list: list, cards: cards }
+    else
+      render json: { errors:
+                      { id: "Couldn't find List with id " + params[:id]
+                        }
+                      }
+    end
+  end
+
   def create
     list = List.new(list_params)
     if list.save

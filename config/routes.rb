@@ -50,7 +50,8 @@ Rails.application.routes.draw do
   resources :board_members, only: [:create, :update, :destroy]
   resources :card_assignments, only: [:create, :update, :destroy]
   resources :boards, only: [:show, :index, :create, :update, :destroy]
-  resources :lists, only: [:create, :update, :destroy]
+  resources :lists
+  # , only: [:create, :update, :destroy]
   resources :cards, only: [:create, :update, :destroy] do
     resources :movements, only: [:create, :update, :destroy]
     resources :tasks, only: [:index, :create, :update, :destroy]
