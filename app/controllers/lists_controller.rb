@@ -2,24 +2,25 @@ class ListsController < ApplicationController
 
   def index
     lists = @current_user.boards.first.lists.includes(:cards)
+    # this includes statement is not working
     cards = lists.map { |list| list.cards  }
     if lists
-      render json: { lists: lists, cards: cards }
+      render json: { lists: lists, cards: cards }, status: 200
     else
-      render json: { errors: { id: "Couldn't find Lists for user" } }
+      render json: { errors: { id: "Couldn't find Lists for user" } }, status: 422
     end
   end
 
   def show
-    list = List.find_by(params[:id])
+    list = List.find_by(id: params[:id])
     cards = list.cards
     if list
-      render json: { list: list, cards: cards }
+      render json: { list: list, cards: cards }, status: 200
     else
       render json: { errors:
                       { id: "Couldn't find List with id " + params[:id]
                         }
-                      }
+                      }, status: 422
     end
   end
 
